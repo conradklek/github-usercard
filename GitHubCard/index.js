@@ -1,3 +1,4 @@
+import axios from "axios";
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -29,6 +30,11 @@
 */
 
 const followersArray = [];
+axios.get(`https://api.github.com/users/conradklek/followers`).then((res) => {
+  res.data.forEach((user) => {
+    followersArray.push(user);
+  });
+});
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -50,6 +56,29 @@ const followersArray = [];
     </div>
 */
 
+const card = (data) => {
+  const card = document.createElement("div");
+  card.classList.add("card");
+  const img = document.createElement("img");
+  img.src = data.avatar_url;
+  const username = document.createElement("p");
+  username.classList.add("username");
+  username.innerText = data.login;
+  const location = document.createElement("p");
+  location.innerText = data.url;
+  const profile = document.createElement("p");
+  profile.innerText = `Profile: ${data.html_url}`;
+  const followers = document.createElement("p");
+  followers.innerText = `Followers: ${data.followers}`;
+  const following = document.createElement("p");
+  following.innerText = `Following: ${data.following}`;
+  const bio = document.createElement("p");
+  bio.innerText = `Bio: ${data.bio}`;
+};
+
+followersArray.forEach((user) => {
+  card(user);
+});
 /*
   List of LS Instructors Github username's:
     tetondan
